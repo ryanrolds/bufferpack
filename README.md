@@ -1,4 +1,4 @@
-jspack - library to pack primitives to octet arrays
+bufferpack - Module to pack primitives and C strings to buffers
 ====================================================
 ## Disclaimer
 The jspack module and documentation are essentially ports of the
@@ -14,20 +14,20 @@ to/from JavaScript values.  This can be used to handle binary data stored in
 files, or received from network connections or other sources.
 
 ## Install
-    npm install jspack
+    npm install bufferpack
 
 ## Reference
 
 The module defines the following functions:
 
-### Unpack(fmt, a, p)
+### unpack(format, buffer, position)
 Return an array containing values unpacked from the octet array a,
 beginning at position p, according to the supplied format string.  If there
 are more octets in a than required by the format string, the excess is
 ignored.  If there are fewer octets than required, Unpack() will return
 undefined.  If no value is supplied for the p argument, zero is assumed.
 
-### PackTo(fmt, a, p, values)
+### packTo(format, buffer, position, values)
 Pack and store the values array into the supplied octet array a, beginning
 at position p.  If there are more values supplied than are specified in the
 format string, the excess is ignored.  If there are fewer values supplied,
@@ -36,13 +36,13 @@ the packed values, PackTo() will return false.  On success, PackTo() returns
 the a argument. If any value is of an inappropriate type, the results are
 undefined.
 
-### Pack(fmt, values)
+### pack(format, values)
 Return an octet array containing the packed values array.  If there are
 more values supplied than are specified in the format string, the excess is
 ignored.  If there are fewer values supplied, Pack() will return false.  If
 any value is of an inappropriate type, the results are undefined.
 
-### CalcLength(fmt)
+### calcLength(format, values)
 Return the number of octets required to store the given format string.
 
 
@@ -63,6 +63,7 @@ JavaScript values should be obvious given their types:
        I   | unsigned long  | number            |        4       |  (3)
        l   | signed long    | number            |        4       |  (3)
        L   | unsigned long  | number            |        4       |  (3)
+       S   | C strig        | string            |        *       |  (6)
        s   | char[]         | string            |     Length     |  (2)
        f   | float          | number            |        4       |  (4)
        d   | double         | number            |        8       |  (5)
@@ -98,6 +99,8 @@ Notes:
   (5) This module assumes that JavaScript is using 64 bits of floating point
   precision, so the "d" code performs no rounding.  128-bit floating point will
   cause the "d" code to simply truncate significands to 52 bits.
+
+  (6) Stuff about C string support
 
 A format character may be preceded by an integral repeat count.  For example,
 the format string "4h" means exactly the same thing as "hhhh".
