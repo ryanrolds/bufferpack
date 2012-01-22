@@ -1,17 +1,31 @@
 {
   "author": "https://github.com/pgriess",
-  "name": "jspack",
-  "description": "JavaScript library to pack primitives to octet arrays, packaged for NodeJS.",
+  "name": "bufferpack",
+  "description": "Module to pack primitives and c strings to a Node.js buffer",
   "version": "0.0.1",
-  "homepage": "http://github.com/birchroad/node-jspack",
+  "keywords": ["jspack", "buffer", "octet", "primitive", "c string"],
+  "homepage": "https://github.com/ryanrolds/node-jspack",
   "repository": {
     "type": "git",
-    "url": "git://github.com/birchroad/node-jspack.git"
+    "url": "git://github.com/ryanrolds/node-jspack.git"
   },
   "main": "./jspack.js",
-  "maintainers": [{
-    "name":"Peter Magnusson"
-  , "email":"peter@birchroad.net"
-  , "web":"http://github.com/birchroad/node-jspack"
-  }]
+  "maintainers": [
+    {
+      "name":"Peter Magnusson",
+      "email":"peter@birchroad.net",
+      "web":"http://github.com/birchroad/node-jspack"
+    },
+    {
+      "name": "Ryan Olds",
+      "email": "ryanrolds@gmail.com",
+      "web": "https://github.com/ryanrolds"
+    }
+  ],
+  "devDependencies": {
+    "mocha": "= 0.10.2"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha test/*.test.js"
+  }
 }
