@@ -127,7 +127,7 @@ function BufferPack() {
   };
 
   // Class data
-  m._sPattern = '(\\d+)?([AxcbBhHsSfdiIlL])';
+  m._sPattern = '(\\d+)?([AxcbBhHsSfdiIlL])(\\(([a-zA-Z0-9]+)\\))?';
   m._lenLut = {'A': 1, 'x': 1, 'c': 1, 'b': 1, 'B': 1, 'h': 2, 'H': 2, 's': 1,
                'S': 1, 'f': 4, 'd': 8, 'i': 4, 'I': 4, 'l': 4, 'L': 4};
   m._elLut = {'A': {en: m._EnArray, de: m._DeArray},
@@ -156,13 +156,29 @@ function BufferPack() {
     for (var fxn = el.en, o = 0; o < n; fxn(a, p+o*s, v[i+o]), o++);
   };
 
+  m._zip = function (keys, values) {
+    var result = {};
+
+    for (var i = 0; i < keys.length; i++) {
+      result[keys[i]] = values[i];
+    }
+
+    return result;
+  }
+
   // Unpack the octet array a, beginning at offset p, according to the fmt string
   m.unpack = function (fmt, a, p) {
     // Set the private bBE flag based on the format string - assume big-endianness
     bBE = (fmt.charAt(0) != '<');
 
     p = p?p:0;
-    var re = new RegExp(this._sPattern, 'g'), m, n, s, rv = [];
+    var re = new RegExp(this._sPattern, 'g');
+    var m;
+    var n;
+    var s;
+    var rk = [];
+    var rv = [];
+    
     while (m = re.exec(fmt)) {
       n = ((m[1]==undefined)||(m[1]==''))?1:parseInt(m[1]);
 
@@ -189,9 +205,16 @@ function BufferPack() {
         break;
       }
 
+      rk.push(m[4]); // Push key on to array
+
       p += n*s;
     }
-    return Array.prototype.concat.apply([], rv);
+    
+    if(rk.indexOf(undefined) !== -1) {
+      return Array.prototype.concat.apply([], rv);
+    } else {
+      return this._zip(rk, rv);
+    }
   };
 
   // Pack the supplied values into the octet array a, beginning at offset p, according to the fmt string
@@ -199,7 +222,13 @@ function BufferPack() {
     // Set the private bBE flag based on the format string - assume big-endianness
     bBE = (fmt.charAt(0) != '<');
 
-    var re = new RegExp(this._sPattern, 'g'), m, n, s, i = 0, j;
+    var re = new RegExp(this._sPattern, 'g');
+    var m;
+    var n;
+    var s;
+    var i = 0;
+    var j;
+
     while (m = re.exec(fmt)) {
       n = ((m[1]==undefined)||(m[1]==''))?1:parseInt(m[1]);
 
@@ -233,6 +262,7 @@ function BufferPack() {
       }
       p += n*s;
     }
+
     return a;
   };
 
