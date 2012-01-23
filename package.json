@@ -1,7 +1,7 @@
 {
   "name": "bufferpack",
   "description": "Module to pack/unpack primitives and c strings into/out of a Node.js buffer",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "keywords": ["jspack", "buffer", "octet", "primitive", "string"],
   "homepage": "https://github.com/ryanrolds/bufferpack",
   "repository": {
