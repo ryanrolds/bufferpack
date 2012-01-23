@@ -1,5 +1,5 @@
 /*!
- *  Copyright © 2008 Fair Oaks Labs, Inc.
+ *  Copyright 2008 Fair Oaks Labs, Inc.
  *  All rights reserved.
  */
 
@@ -170,7 +170,7 @@ function JSPack()
 	};
 
 	// Unpack the octet array a, beginning at offset p, according to the fmt string
-	m.Unpack = function (fmt, a, p)
+	m.unpack = function (fmt, a, p)
 	{
 		// Set the private bBE flag based on the format string - assume big-endianness
 		bBE = (fmt.charAt(0) != '<');
@@ -208,7 +208,7 @@ function JSPack()
 	};
 
 	// Pack the supplied values into the octet array a, beginning at offset p, according to the fmt string
-	m.PackTo = function (fmt, a, p, values)
+	m.packTo = function (fmt, a, p, values)
 	{
 		// Set the private bBE flag based on the format string - assume big-endianness
 		bBE = (fmt.charAt(0) != '<');
@@ -252,21 +252,26 @@ function JSPack()
 	};
 
 	// Pack the supplied values into a new octet array, according to the fmt string
-	m.Pack = function (fmt, values)
+	m.pack = function (fmt, values)
 	{
-		return this.PackTo(fmt, new Array(this.CalcLength(fmt)), 0, values);
+		return this.packTo(fmt, new Buffer(this.calcLength(fmt, values)), 0, values);
 	};
 
 	// Determine the number of bytes represented by the format string
-	m.CalcLength = function (fmt)
+	m.calcLength = function (format, values)
 	{
-		var re = new RegExp(this._sPattern, 'g'), m, sum = 0;
-		while (m = re.exec(fmt))
+		var re = new RegExp(this._sPattern, 'g'), m, sum = 0, i = 0;
+		while (m = re.exec(format))
 		{
-			sum += (((m[1]==undefined)||(m[1]==''))?1:parseInt(m[1])) * this._lenLut[m[2]];
+			var n = (((m[1]==undefined)||(m[1]==''))?1:parseInt(m[1])) * this._lenLut[m[2]];
+			if(m[2] === 'S') {
+				n = values[i].length + 1; // Add one for null byte
+			}
+			sum += n;
+			i++;
 		}
 		return sum;
 	};
 };
 
-exports.jspack = new JSPack();
+module.exports = new JSPack();
