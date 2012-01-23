@@ -4,10 +4,10 @@
   "description": "Module to pack primitives and c strings to a Node.js buffer",
   "version": "0.0.1",
   "keywords": ["jspack", "buffer", "octet", "primitive", "c string"],
-  "homepage": "https://github.com/ryanrolds/node-jspack",
+  "homepage": "https://github.com/ryanrolds/bufferpack",
   "repository": {
     "type": "git",
-    "url": "git://github.com/ryanrolds/node-jspack.git"
+    "url": "git://github.com/ryanrolds/bufferpack.git"
   },
   "main": "./jspack.js",
   "maintainers": [
