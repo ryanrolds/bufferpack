@@ -1,8 +1,8 @@
 {
   "author": "https://github.com/pgriess",
   "name": "bufferpack",
-  "description": "Module to pack primitives and c strings to a Node.js buffer",
-  "version": "0.0.2",
+  "description": "Module to pack/unpack primitives and c strings into/out of a Node.js buffer",
+  "version": "0.0.3-dev",
   "keywords": ["jspack", "buffer", "octet", "primitive", "c string"],
   "homepage": "https://github.com/ryanrolds/bufferpack",
   "repository": {
