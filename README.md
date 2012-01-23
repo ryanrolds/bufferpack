@@ -102,7 +102,9 @@ Notes:
   precision, so the "d" code performs no rounding.  128-bit floating point will
   cause the "d" code to simply truncate significands to 52 bits.
 
-  (6) Stuff about C string support
+  (6) Same handling as (2), but with varible length. Length of c strings is
+  variable, C strings are length + 1 (null byte).
+  
 
 A format character may be preceded by an integral repeat count.  For example,
 the format string "4h" means exactly the same thing as "hhhh".
@@ -137,3 +139,12 @@ byte order of the packed data, according to the following table:
         !     | network (= big-endian)
 
 If the first character is not one of these, "!" is assumed.
+
+## Running Tests
+To run the test suite first invoke the following command within the repo, installing the development dependencies:
+
+    $ npm install
+
+then run the tests:
+
+    $ npm test
