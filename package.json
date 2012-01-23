@@ -9,7 +9,7 @@
     "type": "git",
     "url": "git://github.com/ryanrolds/bufferpack.git"
   },
-  "main": "./jspack.js",
+  "main": "./bufferpack.js",
   "maintainers": [
     {
       "name":"Peter Magnusson",
