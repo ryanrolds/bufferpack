@@ -1,6 +1,7 @@
 bufferpack - Module to pack primitives and C strings to buffers
 ====================================================
 ## Disclaimer
+
 The jspack module and documentation are essentially ports of the
 Python struct module and documentation, with such changes as were necessary. The port
 was originaly made by Fair Oaks Labs, Inc. and published at http://code.google.com/p/jspack/
@@ -16,6 +17,7 @@ to/from JavaScript values.  This can be used to handle binary data stored in
 files, or received from network connections or other sources.
 
 ## Install
+
     npm install bufferpack
 
 ## Reference
@@ -23,13 +25,17 @@ files, or received from network connections or other sources.
 The module defines the following functions:
 
 ### unpack(format, buffer, position)
-Return an array containing values unpacked from the octet array a,
+
+Return an array or object containing values unpacked from the octet array a,
 beginning at position p, according to the supplied format string.  If there
 are more octets in a than required by the format string, the excess is
 ignored.  If there are fewer octets than required, unpack() will return
-undefined.  If no value is supplied for the p argument, zero is assumed.
+undefined.  If no value is supplied for the p argument, zero is assumed. By default
+an array of values is returned. However, if all format characters are assigned
+a name/key an object containing all key/value pairs will returned.
 
 ### packTo(format, buffer, position, values)
+
 Pack and store the values array into the supplied octet array a, beginning
 at position p.  If there are more values supplied than are specified in the
 format string, the excess is ignored.  If there are fewer values supplied,
@@ -39,16 +45,18 @@ the a argument. If any value is of an inappropriate type, the results are
 undefined.
 
 ### pack(format, values)
+
 Return an octet array containing the packed values array.  If there are
 more values supplied than are specified in the format string, the excess is
 ignored.  If there are fewer values supplied, pack() will return false.  If
 any value is of an inappropriate type, the results are undefined.
 
 ### calcLength(format, values)
+
 Return the number of octets required to store the given format string.
 
-
 ## Formats
+
 Format characters have the following meanings; the conversion between C and
 JavaScript values should be obvious given their types:
 
@@ -125,8 +133,14 @@ string, not a repeat count as for the other format characters; for example,
 packing, the string is truncated or padded with 0 bytes as appropriate to make
 it conform to the specified length.  When unpacking, the resulting string always
 has exactly the specified number of bytes.  As a special case, "0s" means a
-single, empty string (while "0c" means 0 characters).
+single, empty string (while "0c" means 0 characters). If variable length strings
+required use the "S" format character, values decoded/encoded this way must be null
+terminated.
 
+A name/key can be assigned to each format character using "(name)". For unpack to 
+use names each format character in the format string must be assigned a name.
+Example: "S(firstName)S(lastName)B(age)". This would result in unpack returning 
+{"firstName": "Ryan", "lastName": "Olds", "age": 28}
 
 By default, C numbers are represented in network (or big-endian) byte order.
 Alternatively, the first character of the format string can be used to indicate
@@ -141,6 +155,7 @@ byte order of the packed data, according to the following table:
 If the first character is not one of these, "!" is assumed.
 
 ## Running Tests
+
 To run the test suite first invoke the following command within the repo, installing the development dependencies:
 
     $ npm install
