@@ -2,9 +2,11 @@ bufferpack - Module to pack primitives and C strings to buffers
 ====================================================
 ## Disclaimer
 The jspack module and documentation are essentially ports of the
-Python struct module and documentation, with such changes as were necessary. The port was originaly made by Fair Oaks Labs, Inc. and published at http://code.google.com/p/jspack/
+Python struct module and documentation, with such changes as were necessary. The port
+was originaly made by Fair Oaks Labs, Inc. and published at http://code.google.com/p/jspack/
 If any Python people are miffed that their documentation got ripped off, let me know,
-and I'll gladly revise them.
+and I'll gladly revise them. The original port to Node.js was done by pgriess. This
+is a fork of node-jspack (https://github.com/pgriess/node-jspack && https://github.com/birchroad/node-jspack).
 
 This module performs conversions between JavaScript values and C structs
 represented as octet arrays (i.e. JavaScript arrays of integral numbers
@@ -24,22 +26,22 @@ The module defines the following functions:
 Return an array containing values unpacked from the octet array a,
 beginning at position p, according to the supplied format string.  If there
 are more octets in a than required by the format string, the excess is
-ignored.  If there are fewer octets than required, Unpack() will return
+ignored.  If there are fewer octets than required, unpack() will return
 undefined.  If no value is supplied for the p argument, zero is assumed.
 
 ### packTo(format, buffer, position, values)
 Pack and store the values array into the supplied octet array a, beginning
 at position p.  If there are more values supplied than are specified in the
 format string, the excess is ignored.  If there are fewer values supplied,
-PackTo() will return false.  If there is insufficient space in a to store
-the packed values, PackTo() will return false.  On success, PackTo() returns
+packTo() will return false.  If there is insufficient space in a to store
+the packed values, packTo() will return false.  On success, packTo() returns
 the a argument. If any value is of an inappropriate type, the results are
 undefined.
 
 ### pack(format, values)
 Return an octet array containing the packed values array.  If there are
 more values supplied than are specified in the format string, the excess is
-ignored.  If there are fewer values supplied, Pack() will return false.  If
+ignored.  If there are fewer values supplied, pack() will return false.  If
 any value is of an inappropriate type, the results are undefined.
 
 ### calcLength(format, values)
@@ -84,9 +86,9 @@ Notes:
   to multiple interpretations.  Caveat coder!
 
   (3) The 8 "integer" codes clip their encoded values to the minima and maxmima
-  of their respective types:  If you invoke Struct.Pack('b', [-129]), for
+  of their respective types:  If you invoke Struct.pack('b', [-129]), for
   instance, the result will be [128], which is the octet encoding of -128,
-  which is the minima of a signed char.  Similarly, Struct.Pack('h', [-32769])
+  which is the minima of a signed char.  Similarly, Struct.pack('h', [-32769])
   returns [128, 0].  Fractions are truncated.
 
   (4) Since JavaScript doesn't natively support 32-bit floats, whenever a float
