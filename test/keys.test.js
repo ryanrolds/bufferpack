@@ -16,8 +16,11 @@ describe('Keying', function() {
     it('should return an object', function() {
       unpacked.should.be.a('object');
       unpacked.should.have.property('first');
+      unpacked.first.should.equal(1);
       unpacked.should.have.property('second');
+      unpacked.second.should.equal(2);
       unpacked.should.have.property('third');
+      unpacked.third.should.equal(3);
     });
 
     it('should returned object should have 3 properties', function() {

@@ -160,7 +160,7 @@ function BufferPack() {
     var result = {};
 
     for (var i = 0; i < keys.length; i++) {
-      result[keys[i]] = values[i];
+      result[keys[i]] = values[i][0];
     }
 
     return result;
