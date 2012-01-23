@@ -2,7 +2,7 @@
 require('should');
 var buffer = require('buffer');
 
-var bufferpack = require('../jspack');
+var bufferpack = require('..');
 
 describe('C String', function() {
   var values = [1, 2, 3, 'test', 5, 6, 7];
