@@ -160,7 +160,7 @@ function BufferPack() {
     var result = {};
 
     for (var i = 0; i < keys.length; i++) {
-      result[keys[i]] = values[i][0];
+      result[keys[i]] = values[i];
     }
 
     return result;
@@ -208,10 +208,12 @@ function BufferPack() {
       rk.push(m[4]); // Push key on to array
 
       p += n*s;
-    }
-    
+    }   
+
+    rv = Array.prototype.concat.apply([], rv)
+
     if(rk.indexOf(undefined) !== -1) {
-      return Array.prototype.concat.apply([], rv);
+      return rv;
     } else {
       return this._zip(rk, rv);
     }

@@ -5,8 +5,8 @@ var buffer = require('buffer');
 var bufferpack = require('..');
 
 describe('Keying', function() {
-  var values = [1, 2, 3];
-  var format = '<b(first)b(second)b(third)';
+  var values = [1, 2, 3, 'atest', 'somethingelse'];
+  var format = '<b(first)b(second)b(third)5s(other)S(something)';
 
   var packed = bufferpack.pack(format, values);
 
@@ -21,10 +21,14 @@ describe('Keying', function() {
       unpacked.second.should.equal(2);
       unpacked.should.have.property('third');
       unpacked.third.should.equal(3);
+      unpacked.should.have.property('other');
+      unpacked.other.should.equal('atest');
+      unpacked.should.have.property('something');
+      unpacked.something.should.equal('somethingelse');
     });
 
-    it('should returned object should have 3 properties', function() {
-      Object.keys(unpacked).length.should.equal(3);
+    it('should returned object should have 5 properties', function() {
+      Object.keys(unpacked).length.should.equal(5);
     });
   });  
 });
