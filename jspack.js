@@ -4,7 +4,7 @@
  */
 
 // Utility object:  Encode/Decode C-style binary primitives to/from octet arrays
-function JSPack() {
+function BufferPack() {
   // Module-level (private) variables
   var el,  bBE = false, m = this;
 
@@ -127,23 +127,23 @@ function JSPack() {
   };
 
   // Class data
-  m._sPattern	= '(\\d+)?([AxcbBhHsSfdiIlL])';
-  m._lenLut	= {'A': 1, 'x': 1, 'c': 1, 'b': 1, 'B': 1, 'h': 2, 'H': 2, 's': 1,
-                   'S': 1, 'f': 4, 'd': 8, 'i': 4, 'I': 4, 'l': 4, 'L': 4};
-  m._elLut	= {	'A': {en: m._EnArray, de: m._DeArray},
-                        's': {en: m._EnString, de: m._DeString},
-                        'S': {en: m._EnString, de: m._DeNullString},
-                        'c': {en: m._EnChar, de: m._DeChar},
-                        'b': {en: m._EnInt, de: m._DeInt, len: 1, bSigned: true, min: -Math.pow(2, 7), max: Math.pow(2, 7) - 1},
-                        'B': {en: m._EnInt, de: m._DeInt, len: 1, bSigned: false, min: 0, max: Math.pow(2, 8) - 1},
-                        'h': {en: m._EnInt, de: m._DeInt, len: 2, bSigned: true, min: -Math.pow(2, 15), max: Math.pow(2, 15) - 1},
-                        'H': {en: m._EnInt, de: m._DeInt, len: 2, bSigned: false, min: 0, max: Math.pow(2, 16) - 1},
-                        'i': {en: m._EnInt, de: m._DeInt, len: 4, bSigned: true, min: -Math.pow(2, 31), max: Math.pow(2, 31) - 1},
-                        'I': {en: m._EnInt, de: m._DeInt, len: 4, bSigned: false, min: 0, max: Math.pow(2, 32) - 1},
-                        'l': {en: m._EnInt, de: m._DeInt, len: 4, bSigned: true, min: -Math.pow(2, 31), max: Math.pow(2, 31) - 1},
-                        'L': {en: m._EnInt, de: m._DeInt, len: 4, bSigned: false, min: 0, max: Math.pow(2, 32) - 1},
-                        'f': {en: m._En754, de: m._De754, len: 4, mLen: 23, rt: Math.pow(2, -24) - Math.pow(2, -77)},
-                        'd': {en: m._En754, de: m._De754, len: 8, mLen: 52, rt: 0}};
+  m._sPattern = '(\\d+)?([AxcbBhHsSfdiIlL])';
+  m._lenLut = {'A': 1, 'x': 1, 'c': 1, 'b': 1, 'B': 1, 'h': 2, 'H': 2, 's': 1,
+               'S': 1, 'f': 4, 'd': 8, 'i': 4, 'I': 4, 'l': 4, 'L': 4};
+  m._elLut = {'A': {en: m._EnArray, de: m._DeArray},
+              's': {en: m._EnString, de: m._DeString},
+              'S': {en: m._EnString, de: m._DeNullString},
+              'c': {en: m._EnChar, de: m._DeChar},
+              'b': {en: m._EnInt, de: m._DeInt, len: 1, bSigned: true, min: -Math.pow(2, 7), max: Math.pow(2, 7) - 1},
+              'B': {en: m._EnInt, de: m._DeInt, len: 1, bSigned: false, min: 0, max: Math.pow(2, 8) - 1},
+              'h': {en: m._EnInt, de: m._DeInt, len: 2, bSigned: true, min: -Math.pow(2, 15), max: Math.pow(2, 15) - 1},
+              'H': {en: m._EnInt, de: m._DeInt, len: 2, bSigned: false, min: 0, max: Math.pow(2, 16) - 1},
+              'i': {en: m._EnInt, de: m._DeInt, len: 4, bSigned: true, min: -Math.pow(2, 31), max: Math.pow(2, 31) - 1},
+              'I': {en: m._EnInt, de: m._DeInt, len: 4, bSigned: false, min: 0, max: Math.pow(2, 32) - 1},
+              'l': {en: m._EnInt, de: m._DeInt, len: 4, bSigned: true, min: -Math.pow(2, 31), max: Math.pow(2, 31) - 1},
+              'L': {en: m._EnInt, de: m._DeInt, len: 4, bSigned: false, min: 0, max: Math.pow(2, 32) - 1},
+              'f': {en: m._En754, de: m._De754, len: 4, mLen: 23, rt: Math.pow(2, -24) - Math.pow(2, -77)},
+              'd': {en: m._En754, de: m._De754, len: 8, mLen: 52, rt: 0}};
 
   // Unpack a series of n elements of size s from array a at offset p with fxn
   m._UnpackSeries = function (n, s, a, p) {
@@ -258,4 +258,4 @@ function JSPack() {
   };
 };
 
-module.exports = new JSPack();
+module.exports = new BufferPack();
