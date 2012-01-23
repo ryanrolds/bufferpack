@@ -65,7 +65,7 @@ JavaScript values should be obvious given their types:
        I   | unsigned long  | number            |        4       |  (3)
        l   | signed long    | number            |        4       |  (3)
        L   | unsigned long  | number            |        4       |  (3)
-       S   | C strig        | string            |        *       |  (6)
+       S   | C string       | string            |        *       |  (6)
        s   | char[]         | string            |     Length     |  (2)
        f   | float          | number            |        4       |  (4)
        d   | double         | number            |        8       |  (5)
