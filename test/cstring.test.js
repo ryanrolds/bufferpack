@@ -73,5 +73,18 @@ describe('C String', function() {
       unpacked[5].should.equal(values[5]);
       unpacked[6].should.equal(values[6]);
     });
+
+  describe('zero with null term string', function() {
+    var values = ['foo', 'bar', 0, 'asdf'];
+    var packed = bufferpack.pack('<SSbS', values);
+
+    it('third should be ""', function() {
+      var unpacked = bufferpack.unpack('<S(first)S(second)S(third)S(forth)', packed);
+      unpacked.first.should.equal('foo');
+      unpacked.second.should.equal('bar');
+      unpacked.third.should.equal('');
+      unpacked.forth.should.equal('asdf');
+    });
+  });
   });
 });

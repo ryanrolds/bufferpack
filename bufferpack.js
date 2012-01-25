@@ -183,6 +183,7 @@ function BufferPack() {
       n = ((m[1]==undefined)||(m[1]==''))?1:parseInt(m[1]);
 
       if(m[2] === 'S') { // Null term string support
+        n = 0; // Need to deal with empty  null term strings
         while(a[p + n] !== 0) {
           n++;
         }
@@ -190,6 +191,7 @@ function BufferPack() {
       }
 
       s = this._lenLut[m[2]];
+
       if ((p + n*s) > a.length) {
         return undefined;
       }
