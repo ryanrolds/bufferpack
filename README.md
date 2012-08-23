@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/ryanrolds/bufferpack.png)](http://travis-ci.org/ryanrolds/bufferpack)
 bufferpack - Module to pack primitives and C strings to buffers
 ====================================================
 ## Disclaimer
