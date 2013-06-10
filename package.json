@@ -27,8 +27,8 @@
     }
   ],
   "devDependencies": {
-    "mocha": "= 0.10.2",
-    "should": "= 0.5.1"
+    "mocha": "= 1.10.0",
+    "should": "= 1.2.2"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha test/*.test.js --reporter spec"

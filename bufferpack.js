@@ -48,6 +48,28 @@ function BufferPack() {
     for (var t, i = 0; i < l; a[p+i] = (t=v.charCodeAt(i))?t:0, i++);
   };
 
+  // ASCII characters strings
+  m._DeHexString = function (a, p, n) {
+    var rv = [], r, c1, c2;
+    for (var i = 0; i < n; i++) {
+      r = a[i];
+      c1 = Math.floor(r / 16);
+      c2 = r % 16;
+      rv.push(c1.toString(16))
+      rv.push(c2.toString(16))
+    }
+    return rv.join('');
+  };
+  m._EnHexString = function (n, s, a, p, v, i) {
+    var r, c1, c2;
+    for (var j = 0; j < n; j++) {
+      c1 = v[p+j*2];
+      c2 = v[p+j*2+1];
+      r = parseInt(c1, 16) * 16 + parseInt(c2, 16);
+      a[j] = r;
+    }
+  };
+
   // ASCII character strings null terminated
   m._DeNullString = function (a, p, l, v) {
     var str = m._DeString(a, p, l, v);
@@ -133,6 +155,7 @@ function BufferPack() {
   m._elLut = {'A': {en: m._EnArray, de: m._DeArray},
               's': {en: m._EnString, de: m._DeString},
               'S': {en: m._EnString, de: m._DeNullString},
+              'x': {en: m._EnHexString, de: m._DeHexString},
               'c': {en: m._EnChar, de: m._DeChar},
               'b': {en: m._EnInt, de: m._DeInt, len: 1, bSigned: true, min: -Math.pow(2, 7), max: Math.pow(2, 7) - 1},
               'B': {en: m._EnInt, de: m._DeInt, len: 1, bSigned: false, min: 0, max: Math.pow(2, 8) - 1},
@@ -197,7 +220,7 @@ function BufferPack() {
       }
 
       switch (m[2]) {
-      case 'A': case 's': case 'S':
+      case 'A': case 's': case 'S': case 'x':
         rv.push(this._elLut[m[2]].de(a, p, n));
         break;
       case 'c': case 'b': case 'B': case 'h': case 'H':
@@ -261,6 +284,13 @@ function BufferPack() {
         i += n;
         break;
       case 'x':
+        el = this._elLut[m[2]];
+        if ((i + n) > values.length) { return false; }
+        this._elLut[m[2]].en(n, s, a, p, values, i);
+        n = n*2;
+        i += n;
+        break;
+      case 'x':
         for (j = 0; j < n; j++) { a[p+j] = 0; }
         break;
       }
@@ -284,7 +314,6 @@ function BufferPack() {
       if(m[2] === 'S') {
         n = values[i].length + 1; // Add one for null byte
       }
-
       sum += n;
       i++;
     }
