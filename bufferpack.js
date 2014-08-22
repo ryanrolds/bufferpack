@@ -178,7 +178,7 @@ function BufferPack() {
     var s;
     var rk = [];
     var rv = [];
-    
+
     while (m = re.exec(fmt)) {
       n = ((m[1]==undefined)||(m[1]==''))?1:parseInt(m[1]);
 
@@ -210,7 +210,7 @@ function BufferPack() {
       rk.push(m[4]); // Push key on to array
 
       p += n*s;
-    }   
+    }
 
     rv = Array.prototype.concat.apply([], rv)
 
@@ -286,7 +286,9 @@ function BufferPack() {
       }
 
       sum += n;
-      i++;
+      if(m[2] !== 'x') {
+        i++;
+      }
     }
     return sum;
   };
