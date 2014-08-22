@@ -14,7 +14,7 @@ describe('Keying', function() {
     var unpacked = bufferpack.unpack(format, packed, 0);
 
     it('should return an object', function() {
-      unpacked.should.be.a('object');
+      unpacked.should.be.an.instanceOf(Object);
       unpacked.should.have.property('first');
       unpacked.first.should.equal(1);
       unpacked.should.have.property('second');
@@ -30,5 +30,5 @@ describe('Keying', function() {
     it('should returned object should have 5 properties', function() {
       Object.keys(unpacked).length.should.equal(5);
     });
-  });  
+  });
 });
