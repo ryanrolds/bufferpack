@@ -15,7 +15,7 @@ describe('C String', function() {
       packed.length.should.equal(12);
     });
 
-    it('should back fine', function() {
+    it('should pack fine', function() {
       packed[0].should.equal(values[0]);
       packed[1].should.equal(values[1]);
       packed[2].should.equal(values[2]);
