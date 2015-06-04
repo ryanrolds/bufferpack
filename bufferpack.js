@@ -16,6 +16,14 @@ function BufferPack() {
     for (var i = 0; i < l; a[p+i] = v[i]?v[i]:0, i++);
   };
 
+  // Boolean
+  m._DeBool = function (a, p) {
+    return !!a[p];
+  };
+  m._EnBool = function (a, p, v) {
+    a[p] = !!v ? 1 : 0;
+  };
+
   // ASCII characters
   m._DeChar = function (a, p) {
     return String.fromCharCode(a[p]);
@@ -127,10 +135,11 @@ function BufferPack() {
   };
 
   // Class data
-  m._sPattern = '(\\d+)?([AxcbBhHsSfdiIlL])(\\(([a-zA-Z0-9]+)\\))?';
-  m._lenLut = {'A': 1, 'x': 1, 'c': 1, 'b': 1, 'B': 1, 'h': 2, 'H': 2, 's': 1,
-               'S': 1, 'f': 4, 'd': 8, 'i': 4, 'I': 4, 'l': 4, 'L': 4};
+  m._sPattern = '(\\d+)?([A\?xcbBhHsSfdiIlL])(\\(([a-zA-Z0-9]+)\\))?';
+  m._lenLut = {'A': 1, '?': 1, 'x': 1, 'c': 1, 'b': 1, 'B': 1, 'h': 2, 'H': 2,
+               's': 1, 'S': 1, 'f': 4, 'd': 8, 'i': 4, 'I': 4, 'l': 4, 'L': 4};
   m._elLut = {'A': {en: m._EnArray, de: m._DeArray},
+              '?': {en: m._EnBool, de: m._DeBool},
               's': {en: m._EnString, de: m._DeString},
               'S': {en: m._EnString, de: m._DeNullString},
               'c': {en: m._EnChar, de: m._DeChar},
@@ -200,7 +209,7 @@ function BufferPack() {
       case 'A': case 's': case 'S':
         rv.push(this._elLut[m[2]].de(a, p, n));
         break;
-      case 'c': case 'b': case 'B': case 'h': case 'H':
+      case '?': case 'c': case 'b': case 'B': case 'h': case 'H':
       case 'i': case 'I': case 'l': case 'L': case 'f': case 'd':
         el = this._elLut[m[2]];
         rv.push(this._UnpackSeries(n, s, a, p));
@@ -253,7 +262,7 @@ function BufferPack() {
         this._elLut[m[2]].en(a, p, n, values[i]);
         i += 1;
         break;
-      case 'c': case 'b': case 'B': case 'h': case 'H':
+      case'?': case 'c': case 'b': case 'B': case 'h': case 'H':
       case 'i': case 'I': case 'l': case 'L': case 'f': case 'd':
         el = this._elLut[m[2]];
         if ((i + n) > values.length) { return false; }

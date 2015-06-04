@@ -64,6 +64,7 @@ JavaScript values should be obvious given their types:
     -------------------------------------------------------------------
        A   | char[]         | Array             |     Length     |  (1)
        x   | pad byte       | N/A               |        1       |
+       ?   | boolean        | boolean           |        1       | 
        c   | char           | string (length 1) |        1       |  (2)
        b   | signed char    | number            |        1       |  (3)
        B   | unsigned char  | number            |        1       |  (3)
