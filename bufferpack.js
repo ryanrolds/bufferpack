@@ -172,6 +172,7 @@ function BufferPack() {
     bBE = (fmt.charAt(0) != '<');
 
     p = p?p:0;
+    var al = a.length;
     var re = new RegExp(this._sPattern, 'g');
     var m;
     var n;
@@ -186,6 +187,8 @@ function BufferPack() {
         n = 0; // Need to deal with empty  null term strings
         while(a[p + n] !== 0) {
           n++;
+          if (p + n >= al) // Don't read past the end of the buffer
+            return undefined;
         }
         n++; // Add one for null byte
       }

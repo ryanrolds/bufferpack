@@ -88,5 +88,14 @@ describe('C String', function() {
         unpacked.forth.should.equal('asdf');
       });
     });
+    describe('strings without null terminators', function() {
+      var values = [0x3c];
+      var packed = bufferpack.pack('b', values);
+
+      it('should return undefined', function() {
+        var unpacked = bufferpack.unpack('S', packed);
+        (unpacked === undefined).should.be.true;
+      });
+    });
   });
 });
